@@ -681,4 +681,4 @@ if __name__ == "__main__":
     application = create_app()
     print("StudyConnect running at http://localhost:5000")
     print("Demo login: coder@studyconnect.edu / Student@123")
-    application.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    application.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
