@@ -116,19 +116,22 @@ def create_app() -> Flask:
             return fn(*args, **kwargs)
         return wrapper
 
+    
     def save_upload(file_storage, folder: str):
-     if not file_storage or not file_storage.filename:
-        return None
+        if not file_storage or not file_storage.filename:
+            return None
 
-    ext = Path(file_storage.filename).suffix.lower()
+        ext = Path(file_storage.filename).suffix.lower()
 
-    if ext not in ALLOWED_EXT:
-        raise ValueError("File type not allowed")
+        if ext not in ALLOWED_EXT:
+            raise ValueError("File type not allowed")
 
-    name = new_id() + ext
-    dest = UPLOAD_ROOT / folder / name
-    file_storage.save(dest)
+        name = new_id() + (secure_filename(ext) or ext)
+        dest = UPLOAD_ROOT / folder / name
 
+        file_storage.save(dest)
+
+        return f"/uploads/{folder}/{name}"
     return f"/uploads/{folder}/{name}"
     def json_body():
         return request.get_json(silent=True) or {}
