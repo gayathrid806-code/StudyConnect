@@ -73,9 +73,8 @@ AI_FALLBACK = {
         "Example: Split a table with (StudentID, Name, Course, Instructor) into separate Student and Course tables."
     ),
 }
-
-
-def create_app() -> Flask:
+ 
+    def create_app() -> Flask:
     app = Flask(__name__, static_folder=str(ROOT), static_url_path="")
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     for folder in ("chat", "notes", "avatars", "doubts"):
@@ -83,7 +82,7 @@ def create_app() -> Flask:
 
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + str(DATA_DIR / "studyconnect.db").replace("\\", "/")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
+    app.config["MAX_CONTENT_LENGTH"] = 50 * 1024 * 1024
     app.config["SECRET_KEY"] = JWT_SECRET
 
     db.init_app(app)
@@ -117,7 +116,7 @@ def create_app() -> Flask:
             return fn(*args, **kwargs)
         return wrapper
 
-    def save_upload(file_storage, folder: str):
+    ad(file_storage, folder: str):
         if not file_storage or not file_storage.filename:
             return None
         ext = Path(file_storage.filename).suffix.lower()
